@@ -30,6 +30,10 @@ public class BigMeteor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D whatIHit)
     {
+        // if GetComponent<IDestructable>(whatIHit )
+        // {
+        //     whatIHit.Destr
+        // }
         if (whatIHit.tag == "Player")
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().gameOver = true;

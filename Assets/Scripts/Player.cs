@@ -6,9 +6,9 @@ public class Player : MonoBehaviour
 {
     public GameObject laserPrefab;
 
-    private float speed = 6f;
-    private float horizontalScreenLimit = 10f;
-    private float verticalScreenLimit = 6f;
+    [SerializeField] private float speed = 6f;
+    [SerializeField] private float horizontalScreenLimit = 10f;
+    [SerializeField] private float verticalScreenLimit = 6f;
     private bool canShoot = true;
 
     // Start is called before the first frame update
