@@ -7,5 +7,6 @@ public class RegularMeteor : Meteor
     public override void TakeDamage()
     {
         Destroy(gameObject);
+        OnMeteorDestroyed?.Invoke(1);
     }
 }

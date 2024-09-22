@@ -11,7 +11,7 @@ public class MeteorSpawner : MonoBehaviour
     [SerializeField] private float delayAtStart = 1f;
     [SerializeField] private float delayBetweenSpawns = 2f;
 
-    private int meteorCount = 0;
+    private int meteorCount = 1;
     private Coroutine spawningCoroutine;
 
     private void OnEnable()
@@ -35,7 +35,7 @@ public class MeteorSpawner : MonoBehaviour
 
         while (!GameManager.Instance.GameOver)
         {
-            if (meteorCount == 5)
+            if (meteorCount % 5 == 0)
             {
                 SpawnMeteor(bigMeteorPrefab);
             }
