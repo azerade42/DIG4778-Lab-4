@@ -17,6 +17,7 @@ public class BigMeteor : Meteor
         if (++hitCount >= 5)
         {
             CameraShake.Instance.ShakeCamera(3f, 10f);
+            SoundManager.Instance.PlayDestroySound();
             OnMeteorDestroyed?.Invoke(3);
             Destroy(gameObject);
         } 

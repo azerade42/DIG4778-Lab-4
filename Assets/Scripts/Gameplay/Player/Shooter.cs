@@ -15,6 +15,7 @@ public class Shooter : MonoBehaviour
 
         Instantiate(shooterPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
         StartCoroutine(nameof(ShootCooldown));
+        SoundManager.Instance.PlayShootSound();
     }
 
     private IEnumerator ShootCooldown()

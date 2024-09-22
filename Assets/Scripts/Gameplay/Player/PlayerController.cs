@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour, IDestructable
     public void DestroyObject()
     {
         OnDestroyed?.Invoke();
+        SoundManager.Instance.PlayPlayerDeathSound();
         Destroy(gameObject);
     }
 }
