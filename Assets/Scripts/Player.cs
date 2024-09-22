@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Action OnDestroy;
     public GameObject laserPrefab;
 
     [SerializeField] private float speed = 6f;

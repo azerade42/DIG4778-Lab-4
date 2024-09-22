@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float destroyYPos = 11f;
+    [SerializeField] private float speed = 8f;
+
+    private void Update()
     {
-        
+        transform.Translate(Vector3.up * Time.deltaTime * speed);
+
+        if (transform.position.y > destroyYPos)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        transform.Translate(Vector3.up * Time.deltaTime * 8f);
-
-        if (transform.position.y > 11f)
+        if (other.gameObject.TryGetComponent(out IDamageable damageable))
         {
-            Destroy(this.gameObject);
+            damageable.TakeDamage();
+            Destroy(gameObject);
         }
     }
 }

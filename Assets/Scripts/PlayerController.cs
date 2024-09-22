@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDestructable
 {
+    public Action OnDestroyed;
     PlayerInputActions inputActions;
     InputAction movement;
     Shooter laserShooter;
@@ -10,7 +12,6 @@ public class PlayerInputController : MonoBehaviour
     [SerializeField] private float speed = 6f;
     [SerializeField] private float horizontalScreenLimit = 10f;
     [SerializeField] private float verticalScreenLimit = 6f;
-
 
     void Awake()
     {
@@ -27,11 +28,13 @@ public class PlayerInputController : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Gameplay.Shoot.performed += Shoot;
+        inputActions.Gameplay.Restart.performed += Restart;
     }
 
     private void OnDisable()
     {
         inputActions.Gameplay.Shoot.performed -= Shoot;
+        inputActions.Gameplay.Restart.performed += Restart;
     }
 
     private void Update()
@@ -56,8 +59,22 @@ public class PlayerInputController : MonoBehaviour
         }
     }
 
-    public void Shoot(InputAction.CallbackContext context)
+    private void Shoot(InputAction.CallbackContext context)
     {
         laserShooter.Shoot();
+    }
+
+    private void Restart(InputAction.CallbackContext context)
+    {
+        if (GameManager.Instance.GameOver)
+        {
+            SceneController.Instance.LoadScene("Week5Lab");
+        }
+    }
+
+    public void DestroyObject()
+    {
+        OnDestroyed?.Invoke();
+        Destroy(gameObject);
     }
 }

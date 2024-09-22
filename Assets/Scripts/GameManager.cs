@@ -1,48 +1,44 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject playerPrefab;
-    public GameObject meteorPrefab;
-    public GameObject bigMeteorPrefab;
-    public bool gameOver = false;
-    public int meteorCount = 0;
+    public static Action OnGameOver;
+    public static GameManager Instance { get; private set; }
+    public bool GameOver { get; private set; }
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] MeteorSpawner meteorSpawner;
+    [SerializeField] PlayerController playerPrefab;
+
+    public void Awake()
     {
-        InvokeRepeating("SpawnMeteor", 1f, 2f);
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        if (gameOver)
-        {
-            CancelInvoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R) && gameOver)
-        {
-            // yuck
-            SceneManager.LoadScene("Week5Lab");
-        }
-
-        if (meteorCount == 5)
-        {
-            BigMeteor();
-        }
+        playerPrefab.OnDestroyed += EndGame;
     }
 
-    void SpawnMeteor()
+    private void OnDisable()
     {
-        Instantiate(meteorPrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.identity);
+        playerPrefab.OnDestroyed -= EndGame;
     }
 
-    void BigMeteor()
+    private void Start()
     {
-        meteorCount = 0;
-        Instantiate(bigMeteorPrefab, new Vector3(Random.Range(-8, 8), 7.5f, 0), Quaternion.identity);
+        if (meteorSpawner != null)
+        {
+            meteorSpawner.StartSpawningMeteors();
+        }
+    }
+    private void EndGame()
+    {
+        GameOver = true;
+        OnGameOver?.Invoke();
     }
 }
