@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public bool GameOver { get; private set; }
 
     [SerializeField] MeteorSpawner meteorSpawner;
-    [SerializeField] PlayerController playerPrefab;
+    [field: SerializeField] public PlayerController PC { get; private set; }
 
     public void Awake()
     {
@@ -21,12 +21,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        playerPrefab.OnDestroyed += EndGame;
+        PC.OnDestroyed += EndGame;
     }
 
     private void OnDisable()
     {
-        playerPrefab.OnDestroyed -= EndGame;
+        PC.OnDestroyed -= EndGame;
     }
 
     private void Start()

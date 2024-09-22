@@ -6,7 +6,9 @@ public class RegularMeteor : Meteor
 {
     public override void TakeDamage()
     {
-        Destroy(gameObject);
+        CameraShake.Instance.ShakeCamera(3f, 10f);
+        
         OnMeteorDestroyed?.Invoke(1);
+        Destroy(gameObject);
     }
 }

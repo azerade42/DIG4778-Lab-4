@@ -12,12 +12,13 @@ public class BigMeteor : Meteor
         this.GetComponent<Meteor>().clockwise = 0;
     }
     public override void TakeDamage()
-    {      
+    {
+        healthbar.UpdateHealth(hitCount);
         if (++hitCount >= 5)
         {
-            Destroy(gameObject);
+            CameraShake.Instance.ShakeCamera(3f, 10f);
             OnMeteorDestroyed?.Invoke(3);
+            Destroy(gameObject);
         } 
-        healthbar.UpdateHealth(hitCount);
     }
 }

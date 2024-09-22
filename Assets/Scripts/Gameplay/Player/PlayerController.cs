@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour, IDestructable
     Shooter laserShooter;
 
     [SerializeField] private float speed = 6f;
-    [SerializeField] private float horizontalScreenLimit = 10f;
-    [SerializeField] private float verticalScreenLimit = 6f;
 
     void Awake()
     {
@@ -47,16 +45,6 @@ public class PlayerController : MonoBehaviour, IDestructable
         Vector2 input = movement.ReadValue<Vector2>();
 
         transform.Translate(input * speed * Time.deltaTime);
-
-        if (transform.position.x > horizontalScreenLimit || transform.position.x <= -horizontalScreenLimit)
-        {
-            transform.position = new Vector3(transform.position.x * -1f, transform.position.y, 0);
-        }
-
-        if (transform.position.y > verticalScreenLimit || transform.position.y <= -verticalScreenLimit)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y * -1, 0);
-        }
     }
 
     private void Shoot(InputAction.CallbackContext context)

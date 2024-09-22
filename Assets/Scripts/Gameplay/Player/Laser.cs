@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    [SerializeField] private float destroyYPos = 11f;
     [SerializeField] private float speed = 8f;
+    [SerializeField] protected float destroyAfterTime = 6f;
+
+    void Start()
+    {
+        StartCoroutine(DestroyAfterTime(destroyAfterTime));
+    }
 
     private void Update()
     {
         transform.Translate(Vector3.up * Time.deltaTime * speed);
-
-        if (transform.position.y > destroyYPos)
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,5 +24,11 @@ public class Laser : MonoBehaviour
             damageable.TakeDamage();
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator DestroyAfterTime(float destroyAfterTime)
+    {
+        yield return new WaitForSeconds(destroyAfterTime);
+        Destroy(gameObject);
     }
 }

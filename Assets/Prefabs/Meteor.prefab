@@ -161,5 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba38a42f4bed8024e83f92566853446f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyYPos: -11
-  speed: 2
+  speed: 3
+  clockwise: 0
+  MoveDir: {x: 0, y: 0, z: 0}
